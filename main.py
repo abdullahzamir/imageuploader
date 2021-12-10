@@ -30,8 +30,6 @@ def uploads():
 def download_file(name):
     return send_from_directory(app.config['upload_folder'],name)
 
-@app.route('/images')
-def images():
-    return render_template('img.html')
+
 
 
