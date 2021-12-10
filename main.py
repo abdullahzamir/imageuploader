@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 app=Flask(__name__)
 
-upload_folder = '/home/gc/Desktop/project/imageuploader/templates/images'
+upload_folder = 'images'
 allowed_ext = {'png','jpeg','jpg'}
 app.config['upload_folder'] = upload_folder
 
