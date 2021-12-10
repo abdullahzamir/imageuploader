@@ -12,11 +12,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in allowed_ext
 
-@app.route('/')
-def hello_world():
-    return "hello, world1"
 
-@app.route('/uploads', methods=['GET','POST'])
+
+@app.route('/', methods=['GET','POST'])
 def uploads():
     if request.method == 'POST':
         file = request.files['file']
