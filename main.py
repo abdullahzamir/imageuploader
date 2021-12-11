@@ -1,6 +1,7 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
 from flask.helpers import send_from_directory
 from werkzeug.utils import secure_filename
+import subprocess as sp
 import os
 app=Flask(__name__)
 
@@ -28,6 +29,7 @@ def uploads():
 def download_file(name):
     return send_from_directory(app.config['upload_folder'],name)
 
-
-
-
+@app.route('/images.php')
+def images():
+    out = sp.run(["php","img.php"], stdout=sp.PIPE)
+    return out.stdout
