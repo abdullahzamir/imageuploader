@@ -15,4 +15,5 @@ python3 -m http.server
 
 ### reference
 https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
+https://betterprogramming.pub/building-your-first-website-with-flask-part-2-6324721be2ae
 
