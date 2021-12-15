@@ -5,9 +5,10 @@ import subprocess as sp
 import os
 app=Flask(__name__)
 
-upload_folder = 'images'
 allowed_ext = {'png','jpeg','jpg'}
+upload_folder = 'images'
 app.config['upload_folder'] = upload_folder
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -25,6 +26,7 @@ def uploads():
     return render_template('index.html')
 
 
+
 @app.route('/uploads/<name>')
 def download_file(name):
     return send_from_directory(app.config['upload_folder'],name)
@@ -33,3 +35,4 @@ def download_file(name):
 def images():
     out = sp.run(["php","img.php"], stdout=sp.PIPE)
     return out.stdout
+
