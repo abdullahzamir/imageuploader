@@ -26,7 +26,7 @@ python3 -m http.server
 ```
 
   ### Screenshots:
-  ![[Pasted image 20211216223123.png]]
+ [Screenshot-at-2021-12-16-22-31-16.png](https://postimg.cc/TpmrHNtg)
 
 ### reference
 
