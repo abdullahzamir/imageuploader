@@ -3,6 +3,7 @@ from flask.helpers import send_from_directory
 from werkzeug.utils import secure_filename
 import subprocess as sp
 import os
+
 app=Flask(__name__)
 
 allowed_ext = {'png','jpeg','jpg'}
@@ -35,4 +36,13 @@ def download_file(name):
 def images():
     out = sp.run(["php","img.php"], stdout=sp.PIPE)
     return out.stdout
+
+app.route('/login', methods=['POST','GET'])
+def login(client, username, password):
+    if request.method == 'POST':
+        return client.post('/login', data=dict(
+            username=username,
+            password=password
+        ), follow_redirects=True)
+    return render_template(login.html)
 

@@ -26,7 +26,7 @@ python3 -m http.server
 ```
 
   ### Screenshots:
- [Screenshot-at-2021-12-16-22-31-16.png](https://postimg.cc/TpmrHNtg)
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/bNV3rKbC/Screenshot-at-2021-12-16-22-31-16.png' border='0' alt='Screenshot-at-2021-12-16-22-31-16'/></a>
 
 ### reference
 
