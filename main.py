@@ -22,12 +22,16 @@ def allowed_file(filename):
 
 @app.route('/index', methods=['GET','POST'])
 def uploads():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename= secure_filename(file.filename)
-            file.save(os.path.join(app.config['upload_folder'],filename))
-    return render_template('index.html')
+    if "username" in session:
+        if request.method == 'POST':
+            print("uploads")
+            file = request.files['file']
+            if file and allowed_file(file.filename):
+                filename= secure_filename(file.filename)
+                file.save(os.path.join(app.config['upload_folder'],filename))        
+        return render_template('index.html')
+    else:
+        return redirect(url_for('login'))
 
 
 
@@ -54,7 +58,7 @@ def login():
         session['password'] = request.form['password']
         flag = verify(session['username'],session['password'])
         if flag:
-            return render_template('index.html')
+            return redirect(url_for('uploads'))
     return '''
     <p> Login </p>
     <form method="post">
