@@ -18,7 +18,11 @@
   <h3 class="text-center mt-3">Uploaded Images</h3>
   <h5 class="text-center">Gallery</h5>
     <?php
-      $files = scandir('./images');
+      session_start();
+      $_SESSION['username']='abdullah';
+      $username = $_SESSION['username'];
+      print_r($username);
+      $files = scandir('./'.$username);
       echo "<div class='row'>";
       foreach ($files as $file) {
         if ($file !== "." && $file !== "..") {

@@ -24,11 +24,12 @@ def allowed_file(filename):
 def uploads():
     if "username" in session:
         if request.method == 'POST':
+            username = session['username']
             print("uploads")
             file = request.files['file']
             if file and allowed_file(file.filename):
                 filename= secure_filename(file.filename)
-                file.save(os.path.join(app.config['upload_folder'],filename))        
+                file.save(os.path.join(username,filename))        
         return render_template('index.html')
     else:
         return redirect(url_for('login'))
@@ -41,8 +42,11 @@ def download_file(name):
 
 @app.route('/images.php')
 def images():
-    out = sp.run(["php","img.php"], stdout=sp.PIPE)
-    return out.stdout
+    if "username" in session:    
+        out = sp.run(["php","img.php"], stdout=sp.PIPE)
+        return out.stdout
+    else:
+        return redirect(url_for('login'))
 
 # @app.route('/')
 # def index():
