@@ -66,7 +66,7 @@ def login():
     <p> Login </p>
     <form method="post">
         <p>Username: <input type=text name=username>
-        <p>Password: <input type=text name=password>
+        <p>Password: <input type=password name=password>
         <p><input type=submit value=login>
     </form>
     '''
