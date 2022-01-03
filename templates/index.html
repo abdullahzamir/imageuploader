@@ -26,8 +26,8 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <nav class="navbar navbar-light bg-light">
 		<span class="icon-bar"></span>
+    <span class="icon-bar"></span>                        
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
       </button>
 	  
       <a class="navbar-brand" href="#">Image Uploader</a>
@@ -35,9 +35,11 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="index.html">Upload Pictures</a></li>
+        <li><a href="http://127.0.0.1:5000/index">Upload Pictures</a></li>
         <li><a href="http://127.0.0.1:5000/images.php">Gallery</a></li>
-        <li><a href="http://127.0.0.1:5000/logout">logout</a></li>
+        <li><a href="http://127.0.0.1:5000/{{user}}/{{upload_url}}">Upload Quiz</a></li>
+        <li><a href="http://127.0.0.1:5000/quiz.php">Quiz Gallery</a></li>
+        <li><a href="http://127.0.0.1:5000/logout">Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -48,7 +50,8 @@
 
 <div class="jumbotron">
   <div class="container text-left">
-    <p>Poor man's Image Uploader</p>      
+    <p>{{upload}}</p>
+    <p>User: {{user}}</p>      
     <p><small>DSA Project</small></p>
   </div>
 </div>

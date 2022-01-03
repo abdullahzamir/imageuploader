@@ -7,7 +7,7 @@ from hashlib import md5
 from flask import session
 app=Flask(__name__)
 app.secret_key = b's3cr3t_k3y'
-allowed_ext = {'png','jpeg','jpg'}
+allowed_ext = {'png','jpeg','jpg','pdf'}
 upload_folder = 'images'
 app.config['upload_folder'] = upload_folder
 chk = "397a39d6700eaa41be9aee2dc4c89b90"
@@ -29,8 +29,9 @@ def uploads():
             file = request.files['file']
             if file and allowed_file(file.filename):
                 filename= secure_filename(file.filename)
-                file.save(os.path.join(username,filename))        
-        return render_template('index.html')
+                upload_folder = username
+                file.save(os.path.join(upload_folder,filename))        
+        return render_template('index.html',upload = 'Poor man Uploader',user = session['username'], upload_url = 'quiz')
     else:
         return redirect(url_for('login'))
 
@@ -49,7 +50,6 @@ def images():
         return redirect(url_for('login'))
 
 # @app.route('/')
-# def index():
 #     if 'username' and 'password' in session:
 #         render_template('index.html')
 #     return redirect(url_for('login'))  
@@ -57,7 +57,7 @@ def images():
 
 @app.route('/', methods=['POST','GET'])
 def login():
-    if request.method == 'POST' and 'username' and 'password' in session:
+    if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = request.form['password']
         flag = verify(session['username'],session['password'])
@@ -72,9 +72,9 @@ def login():
     </form>
     '''
 def verify(username,password):
-    print(username)
+    user = 'abdullah'
     password_hash = md5(password.encode("utf8")).hexdigest()
-    if username==username and chk==password_hash:
+    if user==username and chk==password_hash:
         return True
     else:
         return False   
@@ -83,4 +83,29 @@ def verify(username,password):
 def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
+
+@app.route('/<user>/<upload_folder>',methods = ['GET','POST'])
+def upload_quiz(user,upload_folder):
+    if "username" in session:
+        if request.method == 'POST':
+            username = session['username']
+            print("uploads")
+            file = request.files['file']
+            if file and allowed_file(file.filename):
+                filename= secure_filename(file.filename)
+                upload_folder = 'quiz'
+                file.save(os.path.join(username+"/"+upload_folder,filename))        
+        return render_template('index.html',upload = upload_folder,user=session['username'])
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/quiz.php')
+def quiz_gallery():
+    if "username" in session:    
+        out = sp.run(["php","quizimg.php"], stdout=sp.PIPE)
+        return out.stdout
+    else:
+        return redirect(url_for('login'))
+
+
 
