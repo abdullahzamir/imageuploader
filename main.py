@@ -12,7 +12,6 @@ upload_folder = 'images'
 app.config['upload_folder'] = upload_folder
 chk = "397a39d6700eaa41be9aee2dc4c89b90"
 
-f=open("database.txt","r")
 
 def allowed_file(filename):
     return '.' in filename and \
