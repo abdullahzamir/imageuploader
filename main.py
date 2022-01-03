@@ -98,6 +98,7 @@ def upload_quiz(user,upload_folder):
     else:
         return redirect(url_for('login'))
 
+
 @app.route('/quiz.php')
 def quiz_gallery():
     if "username" in session:    
