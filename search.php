@@ -29,16 +29,16 @@
   </div>
 </nav>
       </h1>
-  <h3 class="text-center mt-3">Uploaded Images</h3>
+  <h3 class="text-center mt-3">Search results</h3>
   <h5 class="text-center">Gallery</h5>
     <?php
+      $array_string = $argv[1];
       echo "<div class='row'>";
-      $files = scandir('./'.$argv[1]);
-      foreach($files as $file) {
-          if($file !== "." && $file !== "..") {
+      $array = explode(' ', $array_string);
+      foreach($array as $file) {
             echo "<div class=' col-6 col-sm-4 col-md-3 mt-3 mb-3'>
-            <img src='http://localhost:8000/$argv[1]/$file' alt='image' width='100%' /></div>";
-          }
+            <img src='http://localhost:8000/$argv[2]/$file' alt='image' width='100%' /></div>";
+          
       }
       echo "</div>";
     ?>

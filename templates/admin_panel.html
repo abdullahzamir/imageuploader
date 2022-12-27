@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <nav class="navbar navbar-light bg-light">
+		<span class="icon-bar"></span>
+    <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
+      </button>
+	  
+      <a class="navbar-brand" href="#">Admin Panel</a>
+	  <nav class="navbar navbar-light bg-light">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="http://127.0.0.1:5000/index">Home</a></li>
+        <li><a href="http://127.0.0.1:5000/logout">Logout</a></li>
+      </ul>        
+    </div>
+  </div>
+</nav>
+
+{{ error }}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Enter </h3>
+      <form action="/admin_panel" method="post">
+        <textarea id="command" value="value" name="query" rows="1" cols="30"> </textarea>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      
+    </div>
+    <div class="col-sm-8">
+      <h3>Output</h3>
+      {% for row in rows %}
+       <p>{{row}}</p>
+      {% endfor %} 
+
+    </div>
+    
+  </div>
+</div>
+
+</body>
+</html>
