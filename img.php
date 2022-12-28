@@ -25,6 +25,8 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="http://localhost:5000/index">Home</a>
       <a class="nav-item nav-link" href="http://localhost:5000/search">Search</a>
+      <a class="nav-item nav-link" href="http://localhost:5000/delete">Delete</a>
+
     </div>
   </div>
 </nav>
@@ -37,7 +39,9 @@
       foreach($files as $file) {
           if($file !== "." && $file !== "..") {
             echo "<div class=' col-6 col-sm-4 col-md-3 mt-3 mb-3'>
-            <img src='http://localhost:8000/$argv[1]/$file' alt='image' width='100%' /></div>";
+            <img src='http://localhost:8000/$argv[1]/$file' alt='image' width='100%' />
+            <p> $file </p></div>";
+            
           }
       }
       echo "</div>";

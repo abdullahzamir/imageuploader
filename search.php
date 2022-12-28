@@ -25,6 +25,7 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="http://localhost:5000/index">Home</a>
       <a class="nav-item nav-link" href="http://localhost:5000/search">Search</a>
+      <a class="nav-item nav-link" href="http://localhost:5000/delete">Delete</a>
     </div>
   </div>
 </nav>

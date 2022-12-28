@@ -1,59 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Admin Panel</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+  <head>
+    <title>Admin Panel</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <nav class="navbar navbar-light bg-light">
-		<span class="icon-bar"></span>
-    <span class="icon-bar"></span>                        
-        <span class="icon-bar"></span>
-      </button>
-	  
-      <a class="navbar-brand" href="#">Admin Panel</a>
-	  <nav class="navbar navbar-light bg-light">
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="http://127.0.0.1:5000/index">Home</a></li>
-        <li><a href="http://127.0.0.1:5000/logout">Logout</a></li>
-      </ul>        
-    </div>
-  </div>
-</nav>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Admin Panel</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="true"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="http://127.0.0.1:5000/index"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://127.0.0.1:5000/backup">Take Backup</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://127.0.0.1:5000/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-{{ error }}
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <h3>Enter </h3>
-      <form action="/admin_panel" method="post">
-        <textarea id="command" value="value" name="query" rows="1" cols="30"> </textarea>
-        <br>
-        <input type="submit" value="Submit">
-      </form>
-      
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card align-start">
+            <div class="card-header bg-light">Admins Input</div>
+            <div class="card-body">
+              <h5 class="card-title">Enter.</h5>
+              <form action="/admin_panel" method="post">
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  id="command"
+                  value="value"
+                  name="query"
+                  rows="5"
+                  cols="30"
+                ></textarea>
+                <br />
+                <input
+                  class="btn-md w-50 btn btn-secondary"
+                  type="submit"
+                  value="Submit"
+                />
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="p-3 mx-auto w-50">
+            <h3 class="display-4">Output</h3>
+            {% for row in rows %}
+            <p>{{row}}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-8">
-      <h3>Output</h3>
-      {% for row in rows %}
-       <p>{{row}}</p>
-      {% endfor %} 
 
+    <div class="container">
+      <div class="alert alert-danger" role="alert">{{error}}</div>
     </div>
-    
-  </div>
-</div>
-
-</body>
+  </body>
 </html>

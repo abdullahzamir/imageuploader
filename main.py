@@ -7,13 +7,13 @@ import os
 import mysql.connector as mysql
 from hashlib import md5
 from flask import session
+import shutil
 app=Flask(__name__)
 app.secret_key = b's3cr3t_k3y'
 allowed_ext = {'png','jpeg','jpg','pdf'}
 upload_folder = 'images'
 app.config['upload_folder'] = upload_folder
 chk = "397a39d6700eaa41be9aee2dc4c89b90"
-
 con = mysql.connect(user='root', password='XSa7xBou1CNy', database='mydb')
 
 
@@ -33,6 +33,8 @@ def query(query):
         return e
 
 error = ""
+
+
 @app.route('/register', methods=['POST','GET'])
 def register():
     global error
@@ -43,6 +45,11 @@ def register():
         if(len(username)==0):
             return redirect(url_for('register'))
         password = request.form['password']
+        
+        if(len(username)>25 and len(password)>45 and len(name)>25):
+            error = "username or password or name is too long"
+            return redirect(url_for('register'))
+                    
         if("'" in username or "'" in password):
             return redirect(url_for('register'))
         gender = request.form['gender']
@@ -59,6 +66,8 @@ def register():
         query(f"INSERT INTO mydb.user (name,username,password,gender) VALUES ('{name}','{username}','{password_hash}','{gender}')")
         return redirect(url_for('login'))
     return render_template('register.html',error = error)
+
+
 @app.route('/admin_panel', methods=['GET','POST'])
 def admin_panel():
     if "username" in session:
@@ -138,15 +147,9 @@ def login():
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
             query('INSERT INTO mydb.session (username,session_start) VALUES ("'+session['username']+'","'+start_time+'")')
             return redirect(url_for('uploads'))
-    return '''
-    <a href="http://127.0.0.1:5000/register">Register</a>
-    <p> Login </p>
-    <form method="post">
-        <p>Username: <input type=text name=username>
-        <p>Password: <input type=password name=password>
-        <p><input type=submit value=login>
-    </form>
-    '''
+    return render_template('login.html')
+
+
 def verify(username,password):
     user = session['username']
     password = session['password']
@@ -204,6 +207,46 @@ def search():
         <p><input type=submit value=submit>
     </form>
     '''
+@app.route('/delete', methods=['POST','GET'])
+def delete():
+    if "username" in session:
+        if request.method == 'POST':
+            now = datetime.now()
+            formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
+            print("delete")
+            file_name = request.form['file_name']
+            print(file_name)
+            query(f"DELETE FROM mydb.image WHERE username = \'{session['username']}\' and file_name = \'{file_name}\'")
+            query(f"INSERT INTO mydb.deleted (username,file_name,date) VALUES (\'{session['username']}\',\'{file_name}\',\'{formatted_date}\' )")
+            os.remove(session['username']+"/"+file_name)
+            return redirect(url_for('uploads'))
+    else:
+        return redirect(url_for('login'))
+    return '''
+    <a href="http://127.0.0.1:5000/index">Home</a>
+    <p> Delete </p>
+    <form method="post">
+        <p> Enter file to delete: </p>
+        <p>Delete: <input type=text name=file_name>
+        <p><input type=submit value=submit>
+    </form>
+    '''
+
+
+@app.route('/backup', methods=['POST','GET'])
+def backup():
+    if "username" in session:
+        if session['username'] == "admin":        
+            images = query("select username,file_name from mydb.image")
+            print(images)
+            for image in images:
+                print(image[0],image[1])
+                query(f"INSERT INTO mydb.backups (username,file_name) VALUES (\'{image[0]}\',\'{image[1]}\')")
+                shutil.copy(image[0]+"/"+image[1],"./backup/"+image[1])
+            return redirect(url_for('admin_panel'))
+        return redirect(url_for('uploads'))    
+    return redirect(url_for('login'))
 
 if __name__=='__main__':
     app.run('localhost',port=5000,debug=True)
+
